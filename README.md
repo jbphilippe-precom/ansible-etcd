@@ -1,5 +1,3 @@
-[![build status](https://gitrep.services.local/ansible-middlewares/ansible-etcd/badges/develop/build.svg)](https://gitrep.services.local/ansible-middlewares/ansible-etcd/commits/develop)
-
 Role Name
 =========
 
@@ -61,7 +59,7 @@ Example Playbook
 License
 -------
 
-BSD
+D
 
 Author Information
 ------------------

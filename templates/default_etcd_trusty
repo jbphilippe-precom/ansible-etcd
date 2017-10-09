@@ -2,12 +2,12 @@
 
 export ETCD_INITIAL_CLUSTER_STATE="new"
 export ETCD_INITIAL_CLUSTER_TOKEN="{{ etcd_clustername }}"
-export ETCD_INITIAL_ADVERTISE_PEER_URLS="http://{{ ansible_fqdn }}:2380"
+export ETCD_INITIAL_ADVERTE_PEER_URLS="http://{{ ansible_fqdn }}:2380"
 export ETCD_INITIAL_CLUSTER="{% for fqdn in groups[etcd_inventory_clustergroup] %}{{ fqdn.split(".")[0] }}=http://{{ hostvars[fqdn][etcd_prod_interface_name]['ipv4']['address'] }}:2380{%- if not loop.last %},{% endif -%}{% endfor %}"
 
 export ETCD_NAME="{{ ansible_hostname }}"
-export ETCD_LISTEN_PEER_URLS="http://{{ ansible_fqdn }}:2380"
-export ETCD_LISTEN_CLIENT_URLS="http://{{ ansible_fqdn }}:2379,http://127.0.0.1:2379"
-export ETCD_ADVERTISE_CLIENT_URLS="http://{{ ansible_fqdn }}:2379"
+export ETCD_LTEN_PEER_URLS="http://{{ ansible_fqdn }}:2380"
+export ETCD_LTEN_CLIENT_URLS="http://{{ ansible_fqdn }}:2379,http://127.0.0.1:2379"
+export ETCD_ADVERTE_CLIENT_URLS="http://{{ ansible_fqdn }}:2379"
 
 export ETCD_DATA_DIR="/var/lib/etcd"
