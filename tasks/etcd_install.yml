@@ -1,0 +1,19 @@
+---
+- name: etcd_set_repository.yml
+  include: etcd_set_repository.yml
+  become: yes
+
+- name: etcd_install_package.yml
+  include: etcd_install_package.yml
+  become: yes
+
+- name: configure
+  include: etcd_configure.yml
+  become: yes
+
+- name: etcd_security.yml
+  include: etcd_security.yml
+  become: yes
+
+#- include: etcd_system_optimization.yml
+#  become: yes

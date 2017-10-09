@@ -1,0 +1,12 @@
+---
+- name: "Uploading default etcd"
+  template:
+    src="{{ etcd_default_file_trusty }}"
+    dest="{{ etcd_default_file_dest }}"
+  notify: restart etcd
+
+- name: "Uploading init etcd"
+  template:
+    src="{{ etcd_init_file_trusty }}"
+    dest="{{ etcd_init_file_dest_trusty }}"
+  notify: restart etcd

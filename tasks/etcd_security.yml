@@ -1,0 +1,22 @@
+---
+- name: Check service port before securise
+  wait_for: port={{ item }} delay=10
+  with_items:
+    - 2379
+
+- name: check if admin user if already created
+  shell: "etcdctl -u root:{{ etcd_admin_password }} user get root"
+  run_once: true
+  ignore_errors: True
+  changed_when: False
+  register: admin_creation
+
+- name: Securise with password
+  shell: "etcdctl user add root:{{ etcd_admin_password }}"
+  run_once: true
+  when: admin_creation.stderr.find("User root does not exist") != -1
+
+- name: Enable auth
+  shell: etcdctl auth enable
+  run_once: true
+  when: admin_creation.stderr.find("User root does not exist") != -1

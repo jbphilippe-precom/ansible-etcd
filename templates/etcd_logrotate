@@ -1,0 +1,7 @@
+{{ etcd_log_path }}/etcd.log {
+        daily
+        copytruncate
+        rotate 7
+        compress
+        missingok
+}

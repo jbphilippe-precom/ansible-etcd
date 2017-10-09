@@ -1,0 +1,6 @@
+---
+# vars file for ansible-etcd
+etcd_service_name: etcd
+etcd_binaries:
+  - etcd
+  - etcdctl

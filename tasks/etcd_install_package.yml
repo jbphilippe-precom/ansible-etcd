@@ -1,0 +1,61 @@
+---
+## ICI INSTALLATION A PARTIR D'UN LIEN DIRECT EN ATTENDANT LA CREATION D'UNE SOLUTION ALTERNATIVE ##
+
+- name: download and extract etcd tarball
+  unarchive:
+    src="{{ etcd_download_url }}"
+    dest=/tmp/
+    copy=no
+  register: result
+  until: result|succeeded
+  retries: 10
+  delay : 5
+
+- name: deploy binaries in /usr/sbin/
+  copy:
+    remote_src=True
+    src="/tmp/{{ etcd_extracted_dir }}/{{ item }}"
+    dest="/usr/sbin/{{ item }}"
+    mode=0755
+  with_items: "{{ etcd_binaries }}"
+
+- name: Adding etcd group
+  group:
+    name=etcd
+    state=present
+    gid=120
+
+## SHELL : A METTRE A FALSE sous reserve de validation par c. leguern ##
+- name: Adding etcd user
+  user:
+    name="{{ etcd_user }}"
+    uid=120
+    home="{{ etcd_var_path }}"
+    group="{{ etcd_group }}"
+    state=present
+    shell=/bin/bash
+
+- name: Create etcd var directory
+  file:
+    path="{{ etcd_var_path }}"
+    state=directory
+    mode=0755
+    owner="{{ etcd_user }}"
+    group="{{ etcd_group }}"
+
+- name: Create etcd log directory
+  file:
+    path="{{ etcd_log_path }}"
+    state=directory
+    mode=0755
+    owner="{{ etcd_user }}"
+    group="{{ etcd_group }}"
+
+- name: Create etcd log file
+  file:
+    path="{{ etcd_log_path }}/etcd.log"
+    state=touch
+    mode=0644
+    owner="{{ etcd_user }}"
+    group="{{ etcd_group }}"
+  changed_when: False

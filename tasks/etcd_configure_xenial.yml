@@ -1,0 +1,18 @@
+---
+- name: "Uploading default etcd"
+  template:
+    src="{{ etcd_default_file_xenial }}"
+    dest="{{ etcd_default_file_dest }}"
+  notify: restart etcd
+
+- name: "Uploading systemd etcd service"
+  template:
+    src="{{ etcd_init_file_xenial }}"
+    dest="{{ etcd_init_file_dest_xenial }}"
+  notify: restart etcd
+
+- name: "Linking etcd service"
+  file:
+    src="{{ etcd_init_file_dest_xenial }}"
+    dest="/etc/systemd/system/multi-user.target.wants/etcd.service"
+    state=link

@@ -1,0 +1,7 @@
+---
+# handlers file for ansible-etcd
+- name: restart etcd
+  become: yes
+  service:
+    name="{{ etcd_service_name }}"
+    state=restarted

@@ -1,0 +1,23 @@
+---
+- name: "set fact interface"
+  set_fact: etcd_prod_interface_name="ansible_{{ etcd_prod_interface }}"
+
+- name: etcd_configure_trusty.yml
+  include: etcd_configure_trusty.yml
+  when: ansible_distribution_release == 'trusty'
+
+- name: etcd_configure_xenial.yml
+  include: etcd_configure_xenial.yml
+  when: ansible_distribution_release == 'xenial'
+
+- name: Starting etcd
+  become: yes
+  service:
+    name="{{ etcd_service_name }}"
+    state=started
+    enabled=yes
+
+- name: Logrotate
+  template:
+    src="{{ etcd_logrotate }}"
+    dest="{{ etcd_logrotate_dest }}"

@@ -1,0 +1,26 @@
+---
+# defaults file for ansible-etcd
+etcd_version: 3.0.3
+etcd_download_url: "http://mirror.services.local/etcd/archive/v{{ etcd_version }}/etcd-v{{ etcd_version }}-linux-amd64.tar.gz"
+etcd_download_output_file: "etcd-v{{ etcd_version }}-linux-amd64.tar.gz"
+etcd_extracted_dir: etcd-v{{ etcd_version }}-linux-amd64
+etcd_var_path: /var/lib/etcd/
+etcd_log_path: /var/log/etcd/
+etcd_group: etcd
+etcd_user: etcd
+etcd_clustername: "MonCluster"
+
+## template ##
+etcd_init_file_trusty: "init_etcd.conf"
+etcd_default_file_trusty: default_etcd_trusty
+etcd_init_file_xenial: "etcd.service"
+etcd_default_file_xenial: default_etcd_xenial
+etcd_logrotate: "etcd_logrotate"
+
+## dest of template ##
+etcd_default_file_dest: /etc/default/etcd
+etcd_init_file_dest_trusty: "/etc/init/etcd.conf"
+etcd_init_file_dest_xenial: "/etc/systemd/system/etcd.service"
+etcd_logrotate_dest: "/etc/logrotate.d/etcd"
+
+etcd_prod_interface: "eth0"

@@ -1,0 +1,9 @@
+- hosts: r3x03
+  become: yes
+  roles:
+    - ../ansible-etcd
+  vars:
+    etcd_version: 3.0.3
+    etcd_clustername: "MonClusterEtcd"
+    etcd_inventory_clustergroup: "r3x03"
+    etcd_admin_password: "42xordcte"
